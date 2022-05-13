@@ -1,20 +1,20 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt"); 
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
-    email: {type: String, required: true, unique: true},
-    password: {type: String, required: true}
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true }
 
-}, {timestamps:true});
+}, { timestamps: true });
 
-userSchema.pre("save",function() { 
+userSchema.pre("save", function () {
 
-    try{
-        if(this.isModified("password")) {
-        this.password = bcrypt.hashSync(this.password, 10); 
+    try {
+        if (this.isModified("password")) {
+            this.password = bcrypt.hashSync(this.password, 10);
         }
     } catch (error) {
-    console.log(error);
+        console.log(error);
     }
 });
 
